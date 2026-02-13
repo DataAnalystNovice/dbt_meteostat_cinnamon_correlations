@@ -1,5 +1,6 @@
 WITH source AS (
-    SELECT * FROM {{ source('northwind', 'orders') }}
+    SELECT * 
+    FROM {{ source('northwind_data', 'orders') }}  -- Changed from 'northwind' to 'northwind_data'
 )
 
 SELECT
