@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: mart_sales_performance
+    description: "Monthly sales performance aggregated by product category"
+    columns:
+      - name: order_year
+        description: "Calendar year of the orders"
+        tests:
+          - not_null
+      
+      - name: order_month
+        description: "Calendar month (1-12) of the orders"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+      
+      - name: category_name
+        description: "Product category name"
+        tests:
+          - not_null
+      
+      - name: total_orders
+        description: "Number of distinct orders in this period/category"
+        tests:
+          - not_null
+      
+      - name: total_revenue
+        description: "Total revenue after discounts"
+        tests:
+          - not_null
+      
+      - name: avg_revenue_per_order
+        description: "Average revenue per order (across all items)"
+      
+      - name: revenue_per_order
+        description: "Total revenue divided by number of distinct orders"
+
+  - name: prep_sales
+    description: "Enriched sales data with product categories and revenue calculation"
+    columns:
+      - name: revenue
+        description: "Calculated as unit_price * quantity * (1 - discount)"
+        tests:
+          - not_null
+
+  - name: staging_orders
+    description: "Cleaned orders table with standardized column names"
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
