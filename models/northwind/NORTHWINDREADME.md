@@ -27,5 +27,8 @@ This project solves three key problems at Northwind Trading:
 - 🎯 **Category performance** - Compare Beverages vs. Seafood vs. Confections, etc.
 
 ## My Biggest Learning Moment
-
+- "Understanding how dbt builds dependencies between models"
+- "Getting the revenue calculation exactly right with discount logic"
+- "Debugging the source configuration and database permissions"
+- "Seeing how staging, prep, and mart layers separate concerns"
 

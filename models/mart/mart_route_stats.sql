@@ -11,7 +11,7 @@ WITH route_flights AS (
         MIN(arr_delay) AS min_arrival_delay,
         SUM(cancelled) AS total_cancelled,
         SUM(diverted) AS total_diverted
-    FROM prep_flights
+    FROM {{ ref('prep_flights') }}  -- Fixed: added ref()
     GROUP BY origin, dest
 )
 SELECT 
@@ -26,15 +26,15 @@ SELECT
     rf.total_flights,
     rf.unique_airplanes,
     rf.unique_airlines,
-    rf.avg_actual_elapsed_time,
-    rf.avg_arrival_delay,
+    ROUND(rf.avg_actual_elapsed_time, 2) AS avg_actual_elapsed_time_minutes,
+    ROUND(rf.avg_arrival_delay, 2) AS avg_arrival_delay_minutes,
     rf.max_arrival_delay,
     rf.min_arrival_delay,
     rf.total_cancelled,
     rf.total_diverted
 FROM route_flights rf
-LEFT JOIN prep_airports oa
+LEFT JOIN {{ ref('prep_airports') }} oa
     ON rf.origin = oa.faa
-LEFT JOIN prep_airports da
+LEFT JOIN {{ ref('prep_airports') }} da
     ON rf.dest = da.faa
 ORDER BY rf.origin, rf.dest
